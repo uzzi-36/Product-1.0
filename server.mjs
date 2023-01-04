@@ -104,14 +104,15 @@ app.delete('/product/:id', (req, res) => {
 app.put('/product/:id', (req, res) => {
 
     const body = req.body;
+    const id = req.params.id;
 
-    if (
-        !body.name ||
-        !body.price ||
-        !body.description
+    if ( // validation
+        !body.name
+        || !body.price
+        || !body.description
     ) {
         res.status(400).send({
-            message: "required parameters missing",
+            message: "required parameters missing"
         });
         return;
     }
@@ -125,8 +126,8 @@ app.put('/product/:id', (req, res) => {
         if (products[i].id === id) {
 
             products[i].name = body.name;
-            products[i].name = body.price;
-            products[i].name = body.description;
+            products[i].price = body.price;
+            products[i].description = body.description;
 
             res.send({
                 message: "product modified successfully"
@@ -134,17 +135,15 @@ app.put('/product/:id', (req, res) => {
             isFound = true
             break;
         }
-
     }
-
     if (!isFound) {
         res.status(404)
         res.send({
-            message: "Edit fail: Product not found"
+            message: "edit fail: product not found"
         });
     }
     res.send({
-        message: "Product added successfully"
+        message: "product added successfully"
     });
 
 })
