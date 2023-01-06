@@ -1,3 +1,4 @@
+// import logo from './logo.svg';
 import './App.css';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -124,7 +125,7 @@ function App() {
     onSubmit: (values) => {
       console.log("values: ", values);
 
-      axios.put(`http://localhost:5001/product/${editingProduct.id}`, {
+      axios.put(`http://localhost:5001/product/${editingProduct._id}`, {
         name: values.productName,
         price: values.productPrice,
         description: values.productDescription,
@@ -195,9 +196,9 @@ function App() {
 
       <div >
         {products.map((eachProduct, i) => (
-          <div key={eachProduct.id} style={{ border: "1px solid black", padding: 10, margin: 10, borderRadius: 15 }}>
+          <div key={eachProduct._id} style={{ border: "1px solid black", padding: 10, margin: 10, borderRadius: 15 }}>
             <h2>{eachProduct.name}</h2>
-            <p>{eachProduct.id}</p>
+            <p>{eachProduct._id}</p>
             <h5>{eachProduct.price}</h5>
             <p>{eachProduct.description}</p>
 
