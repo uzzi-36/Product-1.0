@@ -17,7 +17,7 @@ function App() {
       const response = await axios.get(`http://localhost:5001/products`)
       console.log("response: ", response.data);
 
-      setProducts(response.data.data)
+      setProducts(response.data.data.reverse())
 
     } catch (error) {
       console.log("error in getting all products", error);
@@ -202,14 +202,14 @@ function App() {
             <p>{eachProduct.description}</p>
 
             <button onClick={() => {
-              deleteProduct(eachProduct.id)
+              deleteProduct(eachProduct._id)
             }}>delete</button>
 
             <button onClick={() => {
               editMode(eachProduct)
             }}>edit</button>
 
-            {(isEditMode && editingProduct.id === eachProduct.id) ?
+            {(isEditMode && editingProduct._id === eachProduct._id) ?
               <div>
 
                 <form onSubmit={editFormik.handleSubmit}>
