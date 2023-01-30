@@ -52,7 +52,7 @@ function App() {
     const getProfile = async () => {
       try {
         let response = await axios.get(
-          `${state.baseUrl}/profile`,
+          `${state.baseUrl}/products`,
           {
             withCredentials: true,
             headers: {
