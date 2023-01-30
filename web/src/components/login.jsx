@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import { GlobalContext } from '../context/Context';
+import { useContext } from "react";
 import { Button, TextField } from '@mui/material';
 
 import './login.css'
@@ -9,6 +10,8 @@ const baseUrl = 'http://localhost:5001'
 
 
 function Login() {
+    
+    let { state, dispatch } = useContext(GlobalContext);
 
     const [result, setResult] = useState("");
 
