@@ -3,7 +3,6 @@ import { useEffect, useState, useContext } from "react";
 import { GlobalContext } from './context/Context';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import axios from 'axios'
-import { Routes, Route, Link, Navigate } from "react-router-dom";
 import loaderImg from './img/loader.webp'
 
 
@@ -20,7 +19,7 @@ function App() {
   let { state, dispatch } = useContext(GlobalContext);
 
   console.log("state: ", state);
-// now state login value is checked from context.js 
+  // now state login value is checked from context.js 
   // const [isLogin, setIsLogin] = useState(false);
   const [fullName, setFullName] = useState("");
 

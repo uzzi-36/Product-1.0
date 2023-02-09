@@ -6,11 +6,9 @@ import { Button, TextField } from '@mui/material';
 import './login.css'
 import axios from "axios";
 
-const baseUrl = 'http://localhost:5001'
-
 
 function Login() {
-    
+
     let { state, dispatch } = useContext(GlobalContext);
 
     const [result, setResult] = useState("");
@@ -22,14 +20,14 @@ function Login() {
         e.preventDefault();
 
         try {
-            let response = await axios.post(`${baseUrl}/login`, {
+            let response = await axios.post(`${state.baseUrl}/login`, {
                 email: email,
                 password: password
             }, {
                 withCredentials: true
             })
             dispatch({
-                type : 'USER_LOGIN',
+                type: 'USER_LOGIN',
                 payload: null
             });
 
