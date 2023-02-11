@@ -21,7 +21,6 @@ function App() {
   console.log("state: ", state);
   // now state login value is checked from context.js 
   // const [isLogin, setIsLogin] = useState(false);
-  const [fullName, setFullName] = useState("");
 
 
 
