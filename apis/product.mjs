@@ -6,7 +6,8 @@ const router = express.Router()
 
 
 
-router.post('/product',upload.any(), (req, res) => {
+router.post('/product', (req, res) => {
+    // upload.any()
     // upload.single("image")
 
     const body = req.body;

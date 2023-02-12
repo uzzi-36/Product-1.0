@@ -2,8 +2,6 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import multer  from require('multer')
-const upload = multer({ dest: 'uploads/' })
 
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';

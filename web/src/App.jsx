@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { GlobalContext } from './context/Context';
 import axios from "axios";
-
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faHome,faAdd } from "@fortawesome/free-solid-svg-icons";
 import './App.css';
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 
@@ -26,20 +26,20 @@ function App() {
 
 
   console.log("State", state)
-  // const logoutHandler = async () => {
-  //   try {
-  //     let response = await axios.post(`${state.baseUrl}/logout`,
-  //       {},
-  //       {
-  //         withCredentials: true
-  //       })
-  //     dispatch({
-  //       type: 'USER_LOGOUT'
-  //     })
-  //   } catch (error) {
-  //     console.log("axios error", error)
-  //   }
-  // }
+  const logoutHandler = async () => {
+    try {
+      let response = await axios.post(`${state.baseUrl}/logout`,
+        {},
+        {
+          withCredentials: true
+        })
+      dispatch({
+        type: 'USER_LOGOUT'
+      })
+    } catch (error) {
+      console.log("axios error", error)
+    }
+  }
 
 
   useEffect(() => {
@@ -116,36 +116,23 @@ function App() {
               <li> <Link to={`/`}>Home</Link> </li>
               <li> <Link to={`/gallery`}>Add itmes</Link> </li>
               <li> <Link to={`/about`}>Account</Link> </li>
-              {/* <li> {state.user.firstName} <button onClick={logoutHandler}>Logout</button> </li> */}
             </ul>
           </nav>
           : null}
 
 
 
-      {/* for admin */}
       {
         (state.isLogin === 1) ?
           <nav className='navBar'>
             <ul >
-              <li> <Link to={`/`}>Home</Link> </li>
-              <li> <Link to={`/gallery`}>Add itmes</Link> </li>
-              <li> <Link to={`/about`}>Account</Link> </li>
-              {/* <li> {state.user.firstName} <button onClick={logoutHandler}>Logout</button> </li> */}
+              <li><FontAwesomeIcon icon={faHome}/> <Link to={`/`}>Home</Link> </li>
+              <li><FontAwesomeIcon icon={faAdd}/> <Link to={`/gallery`}>Add itmes</Link> </li>
+              <li> <FontAwesomeIcon icon={faUser}/><Link to={`/about`}>Account</Link> </li>
             </ul>
           </nav>
           : null}
 
-      {/* {
-        (state.isLogin === false) ?
-          <nav className='navBar'>
-            <ul >
-              <li> <Link to={`/`}>Login</Link> </li>
-              <li> <Link to={`/signup`}>Signup</Link> </li>
-            </ul>
-          </nav>
-          : null
-      } */}
 
       {(state.isLogin === 1) ?
         // adminroute
@@ -173,8 +160,8 @@ function App() {
       {(state.isLogin === false) ?
         <Routes>
           <Route path="/login" element={<Login />} />
-           <Route path="/" element={<Front />} /> 
-          <Route path="signup" element={<Signup />} />
+          <Route path="/" element={<Front />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
         : null
