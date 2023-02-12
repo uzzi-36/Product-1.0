@@ -1,12 +1,15 @@
 import { useState, useContext } from "react";
 import axios from 'axios';
 import { GlobalContext } from '../context/Context';
-
-
+import './signup.css'
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye ,faUser ,faEnvelope, faPhone} from "@fortawesome/free-solid-svg-icons";
 
 
 function Signup() {
     let { state, dispatch } = useContext(GlobalContext);
+
 
     const [result, setResult] = useState("");
 
@@ -26,7 +29,6 @@ function Signup() {
                 password: password
             })
 
-
             console.log("signup successful");
             setResult("signup successful")
 
@@ -41,19 +43,46 @@ function Signup() {
 
     return (
         <>
-            <h4>This is Signup page</h4>
+            <div className="signuphead">
+                <h1>SAYLANI WELFARE</h1>
+                <h4>ONLINE DISCOUNT STORE</h4>
+            </div>
 
-            <form onSubmit={signupHandler}>
+            <form className="signupform" onSubmit={signupHandler}>
 
-                Name: <input type="text" name="name" placeholder="Enter your name" onChange={(e) => { setName(e.target.value) }} />
+                <div className="namediv">
+                 <input  type="text" name="name" placeholder="Full name" onChange={(e) => { setName(e.target.value) }} />
+                 <FontAwesomeIcon className="icon" icon={faUser}  />
+
+                 </div>
                 <br />
-                Email: <input type="email" name="username" autoComplete="username" placeholder="email" onChange={(e) => { setEmail(e.target.value) }} />
+
+                <div className="contactDiv">
+                <input type="number" name="new-password" autoComplete="new-password" placeholder="Contact" />
+                <FontAwesomeIcon className="icon" icon={faPhone} />
+                </div>
                 <br />
-                Password: <input type="password" name="new-password" autoComplete="new-password" placeholder="password" onChange={(e) => { setPassword(e.target.value) }} />
+                
+                <div className="emailsdiv">
+                <input type="email" name="username" autoComplete="username" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
+                <FontAwesomeIcon className="icon" icon={faEnvelope} />
+
+                </div>
                 <br />
-                Password: <input type="password" name="new-password" autoComplete="new-password" placeholder="confirm password" />
+
+
+                <div className="passDiv">
+               <input type="password" name="new-password" autoComplete="new-password" placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} />
+               <FontAwesomeIcon className="icon" icon={faEye} />
+               </div>
                 <br />
-                <button type="submit">Signup</button>
+                {(state.isLogin === false) ?
+                    <p className=''>already have an account? <Link className="a" to={`/login`}>Login</Link>
+                    </p> : null}
+
+               
+
+                <button className="signupButton" type="submit">Signup</button>
             </form>
             <p>{result}</p>
         </>

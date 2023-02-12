@@ -1,44 +1,45 @@
 import mongoose from 'mongoose';
 
+
 let productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     price: Number,
-    description: String ,
-    owner: { type: mongoose.ObjectId, ref: "Users", required: true },
-    image: { type: String },
-    isDeleted: { type: Boolean, default: false },
+    description: String,
     createdOn: { type: Date, default: Date.now }
 });
-export const  productModel = mongoose.model('products', productSchema);
-// mongoose.model('tweets', tweetSchema);
+export const productModel = mongoose.model('products', productSchema);
+
 
 const userSchema = new mongoose.Schema({
     firstName: { type: String },
     lastName: { type: String },
-    contact : Number,
     email: { type: String, required: true },
     password: { type: String, required: true },
-    isActive: { type: Boolean, default: true},
     createdOn: { type: Date, default: Date.now },
 });
 export const userModel = mongoose.model('Users', userSchema);
 
-const otpSchema = new mongoose.Schema({
-    otp: String,
-    email: String,
-    isUsed: { type: Boolean, default: false },
-    createdOn: { type: Date, default: Date.now },
-});
-export const otpModel = mongoose.model('Opts', otpSchema);
 
 
+const mongodbURI = process.env.mongodbURI || "mongodb+srv://db_user:uzair0336@cluster0.btba4v8.mongodb.net/productdatabase?retryWrites=true&w=majority";
+
+// working
+//  "mongodb+srv://saad:sdsdsd@cluster0.9bemtsg.mongodb.net/ecommerce?retryWrites=true&w=majority";
+
+ //new also working
+ //mongodb+srv://heck:heck123@cluster0.oud3rz1.mongodb.net/?retryWrites=true&w=majority
+
+//  "mongodb+srv://dbuser:dbpassword@cluster0.gq9n2zr.mongodb.net/abcdatabase?retryWrites=true&w=majority";
 
 
+// // saad 
+// // "mongodb+srv://saad:sdsdsd@cluster0.9bemtsg.mongodb.net/ecommerce?retryWrites=true&w=majority";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 mongoose.connect(mongodbURI);
 
 ////////////////mongodb connected disconnected events///////////////////////////////////////////////
+ 
 mongoose.connection.on('connected', function () {//connected
     console.log("Mongoose is connected");
 });

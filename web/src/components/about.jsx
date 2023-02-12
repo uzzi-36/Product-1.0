@@ -1,6 +1,34 @@
+import axios from "axios";
+import { useContext} from "react";
+import { GlobalContext } from '../context/Context';
+import './about.css'
+
 function About() {
-    return (
-        <div>This is About page</div>
-    )
+    let { state, dispatch } = useContext(GlobalContext);
+
+
+    const logoutHandler = async () => {
+        try {
+          let response = await axios.post(`${state.baseUrl}/logout`,
+            {},
+            {
+              withCredentials: true
+            })
+          dispatch({
+            type: 'USER_LOGOUT'
+          })
+        } catch (error) {
+          console.log("axios error", error)
+        }
+      }
+
+    return(
+        <div>
+        <h1>Account</h1>
+        <button className="logoutButton" onClick={logoutHandler}>Logout</button>
+        </div>
+    ) 
+
 }
-export default About
+
+export default About;

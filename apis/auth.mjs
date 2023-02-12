@@ -1,14 +1,16 @@
 import express from 'express';
-import { userModel, productModel } from './../dbRepo/models.mjs';
+import {userModel } from './../dbRepo/model.mjs'
 import {
     stringToHash,
     varifyHash,
-} from "bcrypt-inzi"
+} from "bcrypt-inzi";
 import jwt from 'jsonwebtoken';
+
 
 const SECRET = process.env.SECRET || "topsecret";
 
 const router = express.Router()
+
 
 router.post('/signup', (req, res) => {
 
@@ -93,7 +95,7 @@ router.post('/login', (req, res) => {
     // check if user exist
     userModel.findOne(
         { email: body.email },
-        { firstName: 1, lastName: 1, email: 1, password: 1 },
+        "firstName lastName email password",
         (err, data) => {
             if (!err) {
                 console.log("data: ", data);
@@ -101,7 +103,7 @@ router.post('/login', (req, res) => {
                 if (data) { // user found
                     varifyHash(body.password, data.password).then(isMatched => {
 
-                        console.log("isMatched: ", isMatched);
+                        console.log("isMatched: ", isMatched)
 
                         if (isMatched) {
 
@@ -112,7 +114,7 @@ router.post('/login', (req, res) => {
                                 exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),
                             }, SECRET);
 
-                            console.log("token: ", token);
+                            console.log("token: ", token); 
 
                             res.cookie('Token', token, {
                                 maxAge: 86_400_000,
@@ -150,25 +152,20 @@ router.post('/login', (req, res) => {
                 return;
             }
         })
-})
-
-
+}, [])
 
 router.post('/logout', (req, res) => {
 
-    // res.cookie('Token', '', {
-    //     maxAge: 1,
-    //     httpOnly: true
-    // });
-
-    // res.send({ message: "Logout successful" });
-
     res.clearCookie('Token', {
+        
         httpOnly: true,
         sameSite: 'none',
         secure: true
-    })  
+    });
+
     res.send({ message: "Logout successful" });
-})
+}, [])
+
+
 
 export default router

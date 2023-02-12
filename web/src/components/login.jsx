@@ -1,39 +1,57 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { GlobalContext } from '../context/Context';
-import { useContext } from "react";
-import { Button, TextField } from '@mui/material';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye ,faEnvelope} from "@fortawesome/free-solid-svg-icons";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 
+
+import axios from 'axios';
 import './login.css'
-import axios from "axios";
+
 
 
 function Login() {
-
     let { state, dispatch } = useContext(GlobalContext);
+
 
     const [result, setResult] = useState("");
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const admin= "admin@aa.com"
+
+
     const loginHandler = async (e) => {
         e.preventDefault();
 
         try {
             let response = await axios.post(`${state.baseUrl}/login`, {
+
                 email: email,
                 password: password
             }, {
                 withCredentials: true
             })
-            dispatch({
-                type: 'USER_LOGIN',
-                payload: null
-            });
 
-
-            console.log("login successful");
-            setResult("login successful")
+            // dispatch({
+            //     type: 'USER_LOGIN',
+            //     payload: response.data.profile
+            // })
+            if (response.data.profile.email === admin) {
+                dispatch({
+                    type: 'USER_ADMIN',
+                    payload: response.data.profile
+                })
+            } else {
+                dispatch({
+                    type: 'USER_LOGIN',
+                    payload: response.data.profile
+                })
+            }
+            
+            console.log("Login successful");
+            setResult("Login successful")
 
         } catch (e) {
             console.log("e: ", e);
@@ -43,45 +61,59 @@ function Login() {
     }
 
 
+
     return (
         <>
-            <h4>This is Login page</h4>
+            <div className="loginhead">
+                <h1>SAYLANI WELFARE</h1>
+                <h4>ONLINE DISCOUNT STORE</h4>
+            </div>
+
+            {state.text}
 
             <form onSubmit={loginHandler} className="loginForm">
 
-
-                <TextField
-                    className="TextField"
-                    id="email"
-                    label="Email"
-                    variant="outlined"
-                    type="email"
-                    name="username"
-                    placeholder="email"
-                    autoComplete="username"
-                    onChange={(e) => { setEmail(e.target.value) }}
-                />
-
-
-                <br />
-
-                <TextField
-                    className="TextField"
-                    id="password"
-                    label="Password"
-                    variant="outlined"
-                    type="password"
-                    name="current-password"
-                    autoComplete="current-password"
-                    placeholder="password"
-                    onChange={(e) => { setPassword(e.target.value) }}
-                />
+                <div className="emaildiv">
+                    <input
+                        className="TextField"
+                        id="email"
+                        label="Email"
+                        variant="outlined"
+                        type="email"
+                        name="username"
+                        placeholder="Email"
+                        autoComplete="username"
+                        onChange={(e) => { setEmail(e.target.value) }}
+                    />
+                <FontAwesomeIcon className="icon" icon={faEnvelope} />
+                    
+                </div>
 
                 <br />
-                <Button variant="outlined" type="submit">Login</Button>
+
+                <div className="passdiv">
+                    <input
+                        className="TextField"
+                        id="password"
+                        label="Password"
+                        variant="outlined"
+                        type="password"
+                        name="current-password"
+                        autoComplete="current-password"
+                        placeholder="Password"
+                        onChange={(e) => { setPassword(e.target.value) }}
+                    />
+                    <FontAwesomeIcon className="icon" icon={faEye} />
+                </div>
+
+                <br />
+                <button className="loginButton" type="submit">Login</button>
+
+                {(state.isLogin === false) ?
+                    <p className=''>Dont't have a account? <Link className="a" to={`/signup`}>signup</Link>
+                    </p> : null}
 
             </form>
-
 
             <p>{result}</p>
         </>

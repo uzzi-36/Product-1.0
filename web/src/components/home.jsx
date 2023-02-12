@@ -1,13 +1,17 @@
-import './home.css';
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from "axios";
 import { useEffect, useState, useContext } from 'react';
 import { GlobalContext } from '../context/Context';
+import './home.css'
+
 
 function Home() {
 
-    let { state, dispatch } = useContext(GlobalContext);
+  let { state, dispatch } = useContext(GlobalContext);
+
+
   const [products, setProducts] = useState([])
   const [loadProduct, setLoadProduct] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
@@ -145,7 +149,7 @@ function Home() {
 
   return (
     <div>
-      <form onSubmit={myFormik.handleSubmit}>
+      {/* <form onSubmit={myFormik.handleSubmit}>
         <input
           id="productName"
           placeholder="Product Name"
@@ -189,7 +193,7 @@ function Home() {
 
         <br />
         <button type="submit"> Submit </button>
-      </form>
+      </form> */}
 
       <br />
       <br />
@@ -199,8 +203,8 @@ function Home() {
         {products.map((eachProduct, i) => (
           <div key={eachProduct._id} style={{ border: "1px solid black", padding: 10, margin: 10, borderRadius: 15 }}>
             <h2>{eachProduct.name}</h2>
-            <p>{eachProduct._id}</p>
-            <h5>{eachProduct.price}</h5>
+            {/* <p>{eachProduct._id}</p> */}
+            <h5 className='price'>{eachProduct.price}</h5>
             <p>{eachProduct.description}</p>
 
             <button onClick={() => {
